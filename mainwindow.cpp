@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 QStringList inputFiles;
 
@@ -18,10 +19,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 void MainWindow::on_openFiles_clicked()
 {
-    QString filter = "Files (*.*)";
     QString caption = "Select files";
     QString dir = QDir::homePath();
+    QString filter = "Files (*.*)";
+
     inputFiles = QFileDialog::getOpenFileNames(this, caption, dir, filter);
+    if(inputFiles.isEmpty())return;
     ui->selectedFiles->clear();
     ui->selectedFiles->addItems(inputFiles);
 }

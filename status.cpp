@@ -20,13 +20,18 @@ void Status::on_btn_ok_clicked()
 }
 
 void Status::convert(QStringList inputFiles) {
+    if(inputFiles.isEmpty()) {
+        ui->label->setText("Nothing to convert");
+        ui->btn_ok->setEnabled(true);
+        return;
+    }
     ui->label->setText("Converting...");
 
-    QFileDialog::Options options = QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks;
     QString caption = "Select output directory";
     QString defaultDir = QDir::homePath();
-    QString outputDir = QFileDialog::getExistingDirectory(this, caption, defaultDir, options);
-    outputDir.append("/");
+    QFileDialog::Options options = QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks;
+
+    QString outputDir = (QFileDialog::getExistingDirectory(this, caption, defaultDir, options)).append("/");
 
     int numberOfFiles = inputFiles.length();
     char buffer;
@@ -34,10 +39,14 @@ void Status::convert(QStringList inputFiles) {
         QFile inputFile(inputFiles.at(i));
         QString outputFileName = QFileInfo(inputFile).fileName();
         QFile newFile(outputDir+outputFileName);
+
         inputFile.open(QIODevice::ReadOnly);
         newFile.open(QIODevice::WriteOnly);
+        ui->label_2->setText(outputFileName);
+
         QDataStream input(&inputFile);
         QDataStream output(&newFile);
+
         while(input.readRawData(&buffer, 1)) {
             if((unsigned char)buffer > 0x9f)
                 for(int j=0;j<96;j++)
@@ -54,6 +63,7 @@ void Status::convert(QStringList inputFiles) {
     }
 
     ui->label->setText("Convertion Complete");
+    ui->label_2->setText("");
     ui->btn_ok->setEnabled(true);
     doneConverting();
 }
