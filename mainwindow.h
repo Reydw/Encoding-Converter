@@ -22,11 +22,12 @@ public slots:
     void doneConverting();
 
 signals:
-    void openDialog(QStringList);
+    void openDialog(QStringList,int,int);
 
 private:
     Ui::MainWindow *ui;
     Status *status;
+    QStringList inputFiles;
 };
 
 #endif // MAINWINDOW_H

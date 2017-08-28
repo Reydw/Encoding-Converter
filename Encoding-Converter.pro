@@ -26,12 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    status.cpp
+    status.cpp \
+    encodings.cpp
 
 HEADERS += \
         mainwindow.h \
-    status.h
+    status.h \
+    encodings.h
 
 FORMS += \
         mainwindow.ui \
     status.ui
+
+RESOURCES += \
+    resources.qrc

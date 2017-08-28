@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QStringList>
+#include <QIcon>
 
 namespace Ui {
 class Status;
@@ -20,7 +21,7 @@ public:
     ~Status();
 
 public slots:
-    void convert(QStringList);
+    void convert(QStringList,int,int);
 
 signals:
     void doneConverting();
